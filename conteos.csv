@@ -1,0 +1,11 @@
+fecha,conjunto,filtro,esperadas,traidas,ids_unicos,paginas,estado,archivo,detalle
+2026-11-24 07:27,xxxx-xxxx,,,0,0,0,error,,"conteo: HTTP 404 Not Found. {
+  ""code"" : ""dataset.missing"",
+  ""error"" : true,
+  ""message"" : ""Not found"",
+  ""data"" : {
+    ""id"" : ""xxxx-xxxx""
+  }
+}"
+2026-11-24 07:29,2zg4-ahca,,3173,3173,3173,4,completa,data/raw/2zg4-ahca_2026-11-24_072949.json,
+2026-11-24 07:34,2zg4-ahca,,3173,2173,2173,4,incompleta,,traídas distintas de esperadas
