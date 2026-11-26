@@ -42,21 +42,31 @@ Equipo E8 · Análisis de Datos Intermedio · Estud-IA (Capa 2)
 
 | | |
 |---|---|
-| Bruto cargado | `data/raw/…json` |
-| Tabla en BigQuery | `bruto.…` (todas las columnas como texto) |
-| Traídas según `conteos.csv` | |
-| `COUNT(*)` en BigQuery | |
+| Bruto cargado | `data/raw/2zg4-ahca_2026-11-24_072949.json` |
+| Tabla en BigQuery | `bruto.ventas_loterias` (todas las columnas como texto) |
+| Traídas según `conteos.csv` | 3.173 |
+| `COUNT(*)` en BigQuery | 3.173 |
 
 ### Staging: de dónde viene cada columna
 
-Archivo: `sql/stg_….sql` (vista `staging.stg_…`).
+Archivo: `sql/stg_ventas_loterias.sql` (vista `staging.stg_ventas_loterias`).
 
 | Columna en el staging | Viene de (bruto) | Regla |
 |---|---|---|
-| | | |
+| id_fila | socrata_id | Identificador de la fila |
+| socrata_creado | socrata_creado | Sin transformación |
+| socrata_actualizado | socrata_actualizado | Sin transformación |
+| socrata_version | socrata_version | Sin transformación |
+| a_o | a_o | Sin transformación |
+| mes | mes | Sin transformación |
+| loteria | loteria | T2: TRIM y conversión a mayúsculas |
+| ventas | ventas | T1: eliminar $, comas y espacios; convertir a NUMERIC. Vacíos y "-" quedan como NULL |
+| archivo_origen | archivo_origen | Sin transformación |
 
 ### Conteo antes y después (`sql/controles_stg.sql`)
 
 | Control | Bruto | Staging | ¿Es lo esperado? |
-|---|---|---|---|
-| Filas | | | |
+|---|---:|---:|---|
+| Filas | 3.173 | 3.173 | Sí: staging conserva todas las filas |
+| Ventas no convertidas | — | 119 | Sí: corresponden a valores vacíos o "-" |
+| Loterías distintas | 34 | 25 | Sí: T2 normaliza variaciones de escritura |
