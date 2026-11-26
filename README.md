@@ -70,3 +70,19 @@ Archivo: `sql/stg_ventas_loterias.sql` (vista `staging.stg_ventas_loterias`).
 | Filas | 3.173 | 3.173 | Sí: staging conserva todas las filas |
 | Ventas no convertidas | — | 119 | Sí: corresponden a valores vacíos o "-" |
 | Loterías distintas | 34 | 25 | Sí: T2 normaliza variaciones de escritura |
+
+## Mi consulta en 3 respuestas (S4)
+
+Consulta: `sql/stg_ventas_loterias.sql`
+
+**1. ¿Por qué el número de filas es igual en bruto y staging?**
+
+Porque las transformaciones que hicimos no eliminaron filas. Convertimos los valores de ventas de texto a números y normalizamos los nombres de las loterías, conservando el total de registros.
+
+**2. ¿Por qué usamos SAFE_CAST y qué pasó con las conversiones fallidas?**
+
+Usamos SAFE_CAST para convertir las ventas a números sin que la consulta falle cuando encuentra un valor que no puede convertir. Los valores vacíos o con guion quedaron como NULL; fueron 119.
+
+**3. ¿Qué pasaría si quitáramos la regla T2?**
+
+Si quitáramos la regla T2, tendríamos la misma lotería registrada en diferentes categorías debido a variaciones en su escritura, por ejemplo, con mayúsculas o espacios. Esto podría dividir la información y afectar los análisis, como las sumas y los promedios de ventas.
